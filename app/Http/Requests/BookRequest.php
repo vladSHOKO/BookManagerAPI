@@ -30,7 +30,6 @@ class BookRequest extends FormRequest
                     'description' => 'nullable|string',
                     'published_year' => 'nullable|string',
                     'pages' => 'nullable|integer',
-                    'user_id' => 'required|integer|exists:users,id',
                 ];
             case 'PATCH':
                 return [

@@ -4,13 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\BookRequest;
 use App\Models\Book;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use \Illuminate\Http\JsonResponse;
-use Symfony\Component\HttpFoundation\Exception\BadRequestException;
 
 class BookController extends Controller
 {
-    public function getCollection(): JsonResponse
+    public function getCollection(Request $request): JsonResponse
     {
         $books = Book::with('user')->get();
 
@@ -28,8 +28,7 @@ class BookController extends Controller
     public function createBook(BookRequest $request): JsonResponse
     {
         $data = $request->validated();
-        $book = new Book();
-        $book->fill($data);
+        $book = $request->user()->books()->create($data);
         abort_unless($book->save(), 400, 'Book not created');
 
         return response()->json(['status' => 'success', 'book_data' => $book]);
