@@ -48,6 +48,7 @@ class BookController extends Controller
     {
         $book = Book::with('user')->find($id);
         abort_unless(isset($book), 404, 'Book not found');
+        $book->delete();
 
         return response()->json(['status' => 'success']);
     }
