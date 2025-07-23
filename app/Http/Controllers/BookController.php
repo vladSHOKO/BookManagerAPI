@@ -12,7 +12,7 @@ class BookController extends Controller
 {
     public function getCollection(Request $request): JsonResponse
     {
-        $books = Book::with('user')->get();
+        $books = Book::with('user')->simplePaginate(10);
 
         return response()->json($books);
     }
