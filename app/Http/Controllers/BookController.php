@@ -12,7 +12,7 @@ class BookController extends Controller
 {
     public function getCollection(Request $request): JsonResponse
     {
-        $books = Book::with('user')->simplePaginate(10);
+        $books = Book::filter($request->only(['title', 'author', 'published_year']))->with('user')->simplePaginate(10);
 
         return response()->json($books);
     }

@@ -31,4 +31,13 @@ class Book extends Model
             $builder->where('user_id', auth()->id());
         });
     }
+
+    public function scopeFilter(Builder $query, array $filters): Builder
+    {
+        foreach ($filters as $filterName => $value) {
+            $query->where($filterName, 'like', '%' . $value . '%');
+        }
+
+        return $query;
+    }
 }
